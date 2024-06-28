@@ -1,0 +1,53 @@
+﻿@using Jendy.Core.Application.ViewModels.User;
+@model UserViewModel;
+
+<style>
+    .profile-card {
+        max-width: 400px;
+        margin: auto;
+        margin-top: 50px;
+    }
+
+        .profile-card .card-header {
+            background-color: #00bfa5;
+            height: 150px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+            .profile-card .card-header img {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                margin-top: 25px;
+                object-fit : cover;
+                border: 5px solid white;
+            }
+
+        .profile-card .card-body {
+            margin-top: 28px;
+            text-align: left;
+            padding-top: 0;
+        }
+
+            .profile-card .card-body h5 {
+                margin-top: 20px;
+            }
+</style>
+
+<div class="profile-card">
+    <div class="card">
+        <div class="card-header d-flex justify-content-center">
+            <img src="@Model.ImageUrl" alt="Profile Image">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"> @Model.Name @Model.LastName</h5>
+            <h6 class="card-subtitle text-muted"> @("@" + Model.UserName)</h6>
+           <div style="align-items: center; display : flex; gap : 30px; margin : 20px 0px 20px 0px">
+                <p><strong>Phone</strong><br>@Model.PhoneNumber</p>
+                <p><strong>Email</strong><br>@Model.Email</p>
+           </div>
+            <a asp-controller="User" asp-action="EditView" asp-route-id="@Model.Id" class="btn btn-secondary btn-block">Edit Profile</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+﻿@using Jendy.Core.Application.ViewModels.User;
+@model SaveViewModel
+
+@{
+    ViewData["Title"] = "Editar usuario";
+}
+
+<div>
+< class="container">
+    <h2>Editando</h2>
+    <form enctype="multipart/form-data" asp-controller="User" asp-action="EditAction" method="post">
+        
+        <div class="form-group">
+            <label for="Name" asp-for="Name" class="control-label">Name</label>
+            <input asp-for="Name" class="form-control" name="Name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+
+        </div>
+        <div class="form-group">
+            <label for="LastName" asp-for="LastName" class="control-label">LastName</label>
+            <input asp-for="LastName" class="form-control" name="LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+
+        </div>
+        <div class="form-group">
+            <label for="Email" asp-for="Email" class="control-label">Email</label>
+            <input asp-for="Email" class="form-control" name="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PhoneNumber" for="PhoneNumber" class="control-label">PhoneNumber</label>
+            <input asp-for="PhoneNumber" class="form-control" name="PhoneNumber" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="File" class="form-label">Seleccione una foto de perfil:</label>
+            <input required asp-for="File" class="form-control" />
+            <span asp-validation-for="File" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UserName" for="UserName" class="control-label">UserName</label>
+            <input asp-for="UserName" class="form-control" name="UserName" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Password" for="Password" class="control-label">Password</label>
+            <input asp-for="Password" class="form-control" name="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+
+
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" for="ConfirmPassword" class="control-label">Confirm Password</label>
+            <input asp-for="ConfirmPassword" class="form-control" name="ConfirmPassword" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+        </div>
+
+        <input type="hidden" name="id" asp-for="Id" />
+        <a asp-controller="UserActions" asp-action="Index" class="btn btn-warning mt-3">Volver</a>
+
+        <div class="d-flex flex-column">
+            <span class="text-warning">Los cambios se visualizaran la proxima ves que inicie sesion</span>
+            <button type="submit" class="btn btn-primary " style="width: 150px">Submit</button>
+        </div>
+    </form>
+</div>

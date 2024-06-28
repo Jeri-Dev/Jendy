@@ -1,0 +1,55 @@
+﻿@using Jendy.Core.Application.ViewModels.Post
+@model SavePostViewModel
+
+@{
+    ViewData["Title"] = "Crear publicacion";
+}
+
+<div class="container">
+    <h2>Crear publicacion</h2>
+    <form enctype="multipart/form-data" asp-controller="Post" asp-action="AddAction" method="post">
+        
+        <div class="d-flex">
+            <div class="form-check">
+                <input checked class="form-check-input" type="radio" name="postType" id="textOption" value="text" onclick="toggleInputs()">
+                <label class="ms-1 form-check-label" for="textOption">
+                    Solo Texto
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="ms-3 form-check-input" type="radio" name="postType" id="imageOption" value="image" onclick="toggleInputs()">
+                <label class="ms-1 form-check-label" for="imageOption">
+                    Imagen
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="ms-3 form-check-input" type="radio" name="postType" id="videoOption" value="video" onclick="toggleInputs()">
+                <label class="ms-1 form-check-label" for="videoOption">
+                    Video
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Message" asp-for="Message" class="control-label">Mensaje</label>
+            <input asp-for="Message" class="form-control" name="Message" />
+            <span asp-validation-for="Message" class="text-danger"></span>
+        </div>
+
+        
+
+        <div class="mb-3" id="imageInput" style="display: none;">
+            <label asp-for="File" class="form-label">Seleccione la imagen a publicar:</label>
+            <input asp-for="File" class="form-control" name="File" />
+            <span asp-validation-for="File" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3" id="videoInput" style="display: none;">
+            <label asp-for="MultimediaUrl" class="form-label">Coloque el link del video a publicar:</label>
+            <input type="text" asp-for="MultimediaUrl" class="form-control" name="VideoUrl" />
+            
+        </div>
+
+        <a asp-controller="Home" asp-action="Index" class="btn btn-warning mt-3">Volver</a>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>

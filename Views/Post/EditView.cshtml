@@ -1,0 +1,40 @@
+﻿@using Jendy.Core.Application.ViewModels.Post
+@model SavePostViewModel
+
+@{
+    ViewData["Title"] = "Editar publicacion";
+}
+
+<div class="container">
+    <h2>Editar publicacion</h2>
+    <form enctype="multipart/form-data" asp-controller="Post" asp-action="EditAction" method="post">
+        
+        <div class="form-group">
+            <label for="Message" asp-for="Message" class="control-label">Mensaje</label>
+            <input asp-for="Message" class="form-control" name="Message" />
+
+        </div>
+       
+        
+        @if (Model.MultimediaUrl != "" && Model.MultimediaUrl.Contains("Images"))
+        {
+            <div class="mb-3">
+                <label asp-for="File" class="form-label">Seleccione el archivo a editar:</label>
+                <input asp-for="File" class="form-control" />
+            </div>
+            
+        }
+        @if (Model.MultimediaUrl != "" && !(Model.MultimediaUrl.Contains("Images")))
+        {
+            <div class="mb-3" id="videoInput">
+                <label asp-for="VideoUrl" class="form-label">Coloque el link del video a editar:</label>
+                <input asp-for="VideoUrl" type="text" class="form-control" name="VideoUrl" />
+            </div>
+
+        }
+        <input type="type" asp-for="Id" />
+
+        <a asp-controller="Home" asp-action="Index" class="btn btn-warning mt-3">Volver</a>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+</div>

@@ -1,0 +1,37 @@
+﻿@using Jendy.Core.Application.ViewModels.User
+@model ICollection<UserViewModel>
+@{
+    ViewData["Title"] = "Nuevos amigos";
+}
+
+<div class="text-center">
+
+    <div class="container mt-5">
+        <a asp-controller="Friends" asp-action="Index" class="btn btn-warning mt-3">Volver</a>
+
+        <div class="row gx-2">
+            @if (Model.Count == 0)
+            {
+                <p name="username"></p>
+                <h3>No hay personas para mostrar</h3>
+            }
+            @foreach (UserViewModel user in Model)
+            {
+                <div class="col-md-6 d-flex align-items-stretch mb-2">
+                    <div class="card" style="width: 300px">
+                        <img src="@user.ImageUrl" class="card-img-top rounded-circle mx-auto mt-3" alt="Profile Picture" style="width: 100px; height: 100px; object-fit: cover; border: 5px solid white;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">
+                                @user.UserName
+                            </h5>
+                            <a asp-controller="Friends" asp-action="AddFriend" asp-route-idFriend="@user.Id" class="btn btn-success">Agregar Amigo</a>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+
+</div>

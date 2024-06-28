@@ -1,0 +1,104 @@
+﻿@using Jendy.Core.Application.ViewModels.Post
+@model ICollection<PostViewModel>
+@{
+    ViewData["Title"] = "Jendy";
+}
+
+<div class="text-center">
+    <a class="btn btn-success"  asp-controller="Post" asp-action="AddView">Crear publicacion</a>
+
+    @foreach(var Posts in Model)
+    {
+        <div class="card mx-auto mt-5" style="width: 800px; height : 100%">
+            <!-- Imagen pequeña del creador y nombre -->
+            <div class="card-header d-flex align-items-center ">
+                <img src="@Posts.UserImageUrl" class="rounded-circle" alt="Creador" style="width: 40px; height: 40px; object-fit: cover;">
+                <h6 class="card-title ms-2 mb-0 ml-2">@Posts.UserName</h6>
+            </div>
+            <!-- Texto de la publicación -->
+            <div class="card-body">
+                <p class="card-text">@Posts.Message</p>
+                <!-- Imagen principal de la publicación (opcional) -->
+                
+                @if(@Posts.MultimediaUrl != ""){
+                    @if (Posts.MultimediaUrl.Contains("Images")){
+                    <img src="@Posts.MultimediaUrl" class="card-img-top mt-3" alt="Publicación" style="width: 100%; max-height: 240px; object-fit: contain;" />
+                }else
+                {
+                    <iframe width="720px" height="440" src="https://www.youtube.com/embed/@Posts.MultimediaUrl" title="{VIDEO_TITLE}"
+                            frameborder="0" allow="accelerometer; autoplay; clipboard-write; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                }
+                }
+               
+                <p>@Posts.CreatedTime.ToShortDateString()</p>
+                <a class="btn btn-primary m-2" asp-controller="Post" asp-action="EditView" asp-route-id="@Posts.Id">Editar</a>
+                <a class="btn btn-danger m-2" asp-controller="Post" asp-action="DeleteView" asp-route-id="@Posts.Id">Borrar</a>
+            </div>
+            <div class="card-footer">
+                <h6 class="mb-2">Comentarios</h6>
+                @foreach (var comment in ViewBag.Comments)
+                {
+                    @if (comment.PostId == Posts.Id)
+                    {
+                        <div class="d-flex align-items-start mb-3">
+                            <img src="@comment.UserImage" class="rounded-circle me-2" alt="Usuario" style="width: 30px; height: 30px; object-fit: cover;">
+                            <div>
+                                <h6 class="mb-0">@comment.Username</h6>
+                                <p class="mb-0">@comment.Message</p>
+                                <small class="text-muted">fecha actual</small>
+
+                                <!-- Sección de respuestas -->
+                                <div class="ml-4">
+                                    @foreach (var reply in ViewBag.Replies)
+                                    {
+                                        
+                                        @if(reply.CommentId == comment.Id)
+                                        {
+                                            <div class="d-flex align-items-start mb-3">
+                                                <img src="@reply.UserImage" class="rounded-circle me-2" alt="Usuario" style="width: 30px; height: 30px; object-fit: cover;">
+                                                <div>
+                                                    <h6 class="mb-0">@reply.Username</h6>
+                                                    <p class="mb-0">@reply.Message</p>
+                                                    <small class="text-muted">fecha actual</small>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+
+                                <!-- Botón para mostrar/ocultar el formulario de respuesta -->
+                                <a class="toggleReplyForm" style="cursor: pointer" data-comment-id="@comment.Id">Responder</a>
+
+                                <!-- Formulario para agregar respuesta, inicialmente oculto -->
+                                <form class="replyForm" asp-controller="Post" asp-action="AddReply" method="post" style="display:none;" data-comment-id="@comment.Id">
+                                    <input type="hidden" name="postid" value="@comment.Id" />
+                                    <input type="hidden" name="ctrl" value="Home" />
+
+
+                                    <input type="hidden" name="commentid" value="@comment.Id" />
+                                    <div class="form-group">
+                                        <textarea class="form-control" name="msg" rows="2" placeholder="Escribe una respuesta..."></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-2">Responder</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                }
+                <!-- Botón para mostrar/ocultar el formulario de comentario -->
+                <button class=" btn btn-primary mt-2 mb-2 toggleCommentForm" data-post-id="@Posts.Id">Comentar</button>
+                <!-- Formulario para agregar nuevo comentario -->
+                <form class="commentForm" asp-controller="Post" asp-action="AddComment" method="post" style="display:none;" data-post-id="@Posts.Id">
+                    <input type="hidden" name="postid" value="@Posts.Id" />
+                    <input type="hidden" name="ctrl" value="Home" />
+
+                    <div class="form-group">
+                        <textarea class="form-control" name="msg" rows="2" placeholder="Escribe un comentario..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Comentar</button>
+                </form>
+            </div>
+        </div>
+    }
+
+</div>

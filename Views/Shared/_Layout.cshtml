@@ -1,0 +1,73 @@
+﻿@using Jendy.Core.Application.Helpers
+@using Jendy.Core.Application.ViewModels.User
+@inject IHttpContextAccessor httpContextAccesor
+@{
+    var User = httpContextAccesor.HttpContext.Session.Get<UserViewModel>("user");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Jendy</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Jendy.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class=" fixed-top navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3" style="height:70px">
+            <div class="container-fluid">
+                <div style="display: flex; justify-content: space-evenly; width: 100vw; align-items: center">
+                   <div class="d-flex g-2 align-items-center">
+                        <a style="font-size: 24px; font-weight: 600"
+                           class="navbar-brand" asp-area="" asp-controller="@(User != null ? "Home" : "User")" asp-action="Index">Jendy</a>
+                        @if (User != null)
+                        {
+                            <form asp-action="SearchFriends" asp-controller="Friends">
+                                <div class="form-group d-flex" style="width: 400px">
+                                    <input type="text" class="form-control" name="username" style="max-width: 300px id="username" placeholder="Buscar personas">
+                                    <button type="submit" class="ms-3 btn btn-primary">Buscar</button>
+                                </div>
+
+                            </form>
+                        }
+                    </div>
+                    <div class="">
+                        <ul class="navbar-nav">
+
+                            @if (User != null)
+                            {
+                                <div class="flex-grow-1 justify-content-between">
+                                    <a class="btn text-light ms-3" asp-controller="Home" asp-action="Index">Inicio</a>
+                                    <a class="btn text-light ms-3" asp-controller="UserActions" asp-action="Index">Mi Perfil</a>
+                                    <a class="btn text-light ms-3" asp-controller="Friends" asp-action="Index">Mis Amigos</a>
+
+                                    <a class="btn btn-warning ms-3" asp-controller="User" asp-action="LogOut">Cerrar Sesion</a>
+                                </div>
+
+                            }
+                        </ul>
+                    </div>
+                </div>
+                </div>
+        </nav>
+       
+    </header>
+    <div class="container" style="padding-top: 100px">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - Jendy 
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
